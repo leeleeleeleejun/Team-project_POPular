@@ -20,6 +20,8 @@ const Container = styled.footer`
 
   border-top: 1px var(--color-light-gray) solid;
 
+  z-index: 999;
+
   nav {
     display: flex;
     justify-content: space-between;
@@ -66,9 +68,7 @@ const Container = styled.footer`
   }
 `;
 
-const GlovalNavigation = () => {
-  const FAKE_ID = '122323';
-
+const GlobalNavigation = () => {
   return (
     <Container>
       <nav>
@@ -90,13 +90,13 @@ const GlovalNavigation = () => {
             <p>홈</p>
           </div>
         </NavLink>
-        <NavLink to={CLIENT_PATH.COMMUNITY} className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <CommunityIcon />
             <p>커뮤니티</p>
           </div>
         </NavLink>
-        <NavLink to={`${CLIENT_PATH.USER}/${FAKE_ID}`} end className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={`${CLIENT_PATH.USER_MENU}`} end className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <UserIcon />
             <p>마이페이지</p>
@@ -107,4 +107,4 @@ const GlovalNavigation = () => {
   );
 };
 
-export default GlovalNavigation;
+export default GlobalNavigation;
