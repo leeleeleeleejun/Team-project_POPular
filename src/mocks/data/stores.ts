@@ -43,8 +43,8 @@ export const storeData: Store[] = [
     },
     location: '서울 마포구 서교동 양화로 130 홍대 라이즈호텔 1층',
     coord: {
-      lat: '126.920914',
-      lng: '37.553916',
+      lat: '37.553916',
+      lng: '126.920914',
     },
     price: 30000,
     sns: [
@@ -102,8 +102,8 @@ export const storeData: Store[] = [
     },
     location: '서울 마포구 서교동 양화로 130 홍대 라이즈호텔 1층',
     coord: {
-      lat: '126.923914',
-      lng: '37.553916',
+      lat: '37.553916',
+      lng: '126.923914',
     },
     price: 30000,
     sns: [
@@ -161,8 +161,8 @@ export const storeData: Store[] = [
     },
     location: '서울 마포구 서교동 양화로 130 홍대 라이즈호텔 1층',
     coord: {
-      lat: '126.910914',
-      lng: '37.554916',
+      lat: '37.554916',
+      lng: '126.910914',
     },
     price: 30000,
     sns: [
@@ -220,8 +220,8 @@ export const storeData: Store[] = [
     },
     location: '서울 마포구 서교동 양화로 130 홍대 라이즈호텔 1층',
     coord: {
-      lat: '126.920914',
-      lng: '37.555116',
+      lat: '37.555116',
+      lng: '126.920914',
     },
     price: 30000,
     sns: [
@@ -279,8 +279,8 @@ export const storeData: Store[] = [
     },
     location: '서울 마포구 서교동 양화로 130 홍대 라이즈호텔 1층',
     coord: {
-      lat: '126.930914',
-      lng: '37.556916',
+      lat: '37.556916',
+      lng: '126.930914',
     },
     price: 30000,
     sns: [

@@ -50,15 +50,13 @@ const CarouselItem = ({ store, idx }: Props) => {
 
   function clickHandler() {
     if (seq === 'current') navigate(`/store/${store.id}`);
-    const markerPosition = new window.kakao.maps.LatLng(store.coord.lng, store.coord.lat);
 
     dispatch(mapActions.setCurrentIdx(idx));
     dispatch(mapActions.setSlectedId(store.id));
-    map!.panTo(markerPosition);
     dispatch(
       mapActions.setCenter({
-        lat: store.coord.lng,
-        lng: store.coord.lat,
+        lat: store.coord.lat,
+        lng: store.coord.lng,
       }),
     );
   }

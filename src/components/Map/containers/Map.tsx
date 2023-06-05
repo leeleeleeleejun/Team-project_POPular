@@ -7,10 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mapActions } from '../mapSlice';
 import { RootState } from '../../../store';
 import { useGetAllStoreQuery } from '../../../api/store';
+import SearchBox from '../components/SearchBox';
+
+interface IAddr {
+  address: string;
+  zonecode: string;
+}
 
 declare global {
   interface Window {
     kakao: any;
+    daum: any;
   }
 }
 
@@ -154,11 +161,16 @@ const Map = () => {
     dispatch(mapActions.setMap(createdMap));
   }, []);
 
+  useEffect(() => {
+    const convertedCenter = new window.kakao.maps.LatLng(center.lat, center.lng);
+    map?.panTo(convertedCenter);
+  }, [center]);
+
   function createMarkers() {
     markers.forEach((marker) => marker.setMap(null));
 
     const createdMarkers = stores!.map((store, idx) => {
-      const markerPosition = new window.kakao.maps.LatLng(store.coord.lng, store.coord.lat);
+      const markerPosition = new window.kakao.maps.LatLng(store.coord.lat, store.coord.lng);
       const content = document.createElement('div');
       content.className = 'custom-overlay';
       if (selectedId === store.id) content.classList.add('selected');
@@ -170,13 +182,12 @@ const Map = () => {
       `;
 
       content.addEventListener('click', () => {
-        map!.panTo(markerPosition);
         dispatch(mapActions.setCurrentIdx(idx));
         dispatch(mapActions.setSlectedId(store.id));
         dispatch(
           mapActions.setCenter({
-            lat: store.coord.lng,
-            lng: store.coord.lat,
+            lat: store.coord.lat,
+            lng: store.coord.lng,
           }),
         );
       });
@@ -195,13 +206,13 @@ const Map = () => {
   useEffect(() => {
     if (isFetching || !stores || !map || !markers) return;
 
-    const markerPosition = new window.kakao.maps.LatLng(stores[0].coord.lng, stores[0].coord.lat);
+    const markerPosition = new window.kakao.maps.LatLng(stores[0].coord.lat, stores[0].coord.lng);
     dispatch(mapActions.setCurrentIdx(0));
     dispatch(mapActions.setSlectedId(stores[0].id));
     dispatch(
       mapActions.setCenter({
-        lat: stores[0].coord.lng,
-        lng: stores[0].coord.lat,
+        lat: stores[0].coord.lat,
+        lng: stores[0].coord.lng,
       }),
     );
     map.setCenter(markerPosition);
@@ -223,6 +234,7 @@ const Map = () => {
           refetch();
         }}
       />
+      <SearchBox />
       <div className={`store-list-container ${openList ? 'open' : ''}`}>
         <div
           className="opner"
