@@ -1,4 +1,3 @@
-import { BoardTypes } from './board';
 import { UserOnlyProfile } from './user';
 
 export interface Comment {
@@ -6,5 +5,4 @@ export interface Comment {
   author: UserOnlyProfile;
   content: string;
   post: any;
-  board: BoardTypes;
 }

@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Store } from '../types/store';
 
 const Container = styled.div`
   width: 100%;
