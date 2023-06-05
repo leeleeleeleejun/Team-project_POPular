@@ -6,7 +6,7 @@ import SlideCarousel from '../components/SlideCarousel';
 import { useDispatch, useSelector } from 'react-redux';
 import { mapActions } from '../mapSlice';
 import { RootState } from '../../../store';
-import { useGetAllStoreQuery } from '../../../api/store';
+import { useStoreControllerGetAllStoreQuery } from '../../../store/popupApi';
 
 declare global {
   interface Window {
@@ -136,7 +136,8 @@ const Map = () => {
   const markers = useSelector((state: RootState) => state.map.markers);
   const center = useSelector((state: RootState) => state.map.center);
 
-  const { data: stores, isFetching, refetch } = useGetAllStoreQuery();
+  const { data: stores, isFetching, refetch } = useStoreControllerGetAllStoreQuery();
+  console.log(stores);
 
   // 최초 맵 렌더링
   useEffect(() => {
