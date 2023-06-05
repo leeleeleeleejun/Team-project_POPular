@@ -133,6 +133,8 @@ const Container = styled.div`
   }
 `;
 
+const initial = true;
+
 const Map = () => {
   const dispatch = useDispatch();
 
@@ -163,6 +165,7 @@ const Map = () => {
 
   useEffect(() => {
     const convertedCenter = new window.kakao.maps.LatLng(center.lat, center.lng);
+
     map?.panTo(convertedCenter);
   }, [center]);
 

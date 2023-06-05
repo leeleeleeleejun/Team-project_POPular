@@ -30,7 +30,8 @@ const Container = styled.div`
     -moz-box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.39);
   }
 
-  ul {
+  ul,
+  .blank {
     position: absolute;
     top: 40px;
     left: -150px;
@@ -72,6 +73,7 @@ interface Result {
 const SearchBox = () => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [results, setResults] = useState<Result[]>([]);
+  const [focusInput, setFocusInput] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const changeHanlder = () => {
@@ -103,7 +105,7 @@ const SearchBox = () => {
       }
 
       const result = await response.json();
-      setResults(result.documents); // API 호출 결과를 콘솔에 출력하거나 원하는 대로 처리합니다.
+      setResults(result.documents);
     } catch (error) {
       console.error('API 호출 중 오류가 발생했습니다:', error);
     }
@@ -111,11 +113,18 @@ const SearchBox = () => {
 
   return (
     <Container>
-      <input type="text" placeholder="지역명을 입력해주세요" onChange={changeHanlder} ref={searchRef} />
-      {results.length > 0 && (
+      <input
+        type="text"
+        placeholder="지역명을 입력해주세요"
+        onChange={changeHanlder}
+        onFocus={() => {
+          setFocusInput(true);
+        }}
+        ref={searchRef}
+      />
+      {focusInput && results.length > 0 && (
         <ul>
           {results.map((result) => {
-            console.log(result);
             return (
               <li key={result.address_name}>
                 <div
@@ -126,6 +135,8 @@ const SearchBox = () => {
                         lng: result.x,
                       }),
                     );
+                    searchRef.current!.value = result.address_name;
+                    setFocusInput(false);
                   }}
                   className="result-item"
                 >
@@ -136,6 +147,7 @@ const SearchBox = () => {
           })}
         </ul>
       )}
+      {focusInput && results.length === 0 && <div className="blank">검색 결과가 없습니다.</div>}
     </Container>
   );
 };
