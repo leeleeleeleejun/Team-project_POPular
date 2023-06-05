@@ -4,10 +4,12 @@ import WritePostSlice from '../components/WritePost/WritePostSlice';
 import UserSlice from '../components/User/UserSlice';
 import { mapReducer } from '../components/Map/mapSlice';
 import { storeAPI } from '../api/store';
+import { darkModeReducer } from './darkModeSlice';
 
 const store = configureStore({
   reducer: {
     map: mapReducer,
+    darkMode: darkModeReducer,
     CommunitySlice,
     WritePostSlice,
     UserSlice,

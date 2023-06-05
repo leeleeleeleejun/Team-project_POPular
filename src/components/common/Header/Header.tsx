@@ -2,6 +2,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { CLIENT_PATH } from '../../../constants/path';
 import PrevIcon from '../Icons/PrevIcon';
+import { useDispatch } from 'react-redux';
+import { darkModeActions } from '../../../store/darkModeSlice';
 
 const Container = styled.header`
   position: fixed;
@@ -15,7 +17,7 @@ const Container = styled.header`
 
   border-bottom: 1px var(--color-light-gray) solid;
 
-  background-color: #fff;
+  background-color: ${(props) => props.theme.bgColor};
 
   z-index: 999;
 
@@ -28,6 +30,10 @@ const Container = styled.header`
 
     max-width: 1024px;
     height: 100%;
+
+    * {
+      color: ${(props) => props.theme.textColor};
+    }
 
     margin: 0 auto;
 
@@ -53,11 +59,17 @@ const Container = styled.header`
       }
     }
   }
+
+  .dark-mode-toggle {
+    position: absolute;
+    right: 20px;
+  }
 `;
 
 const Header = () => {
   const isHome = useLocation().pathname === CLIENT_PATH.HOME;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -68,6 +80,14 @@ const Header = () => {
           </button>
         )}
         <Link to={CLIENT_PATH.HOME}>LOGO</Link>
+        <div
+          className="dark-mode-toggle"
+          onClick={() => {
+            dispatch(darkModeActions.toggleDarkMode());
+          }}
+        >
+          클릭
+        </div>
       </div>
     </Container>
   );

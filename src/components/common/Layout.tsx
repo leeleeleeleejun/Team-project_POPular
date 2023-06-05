@@ -1,10 +1,18 @@
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import Header from './Header/Header';
 import GlovalNavigation from './GNA/GlobalNavigation';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { darkTheme, lightTheme } from '../../styles/themeStyles';
 
 const Wrapper = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
+  background-color: ${(props) => props.theme.bgColor};
+
+  * {
+    color: ${(props) => props.theme.textColor};
+  }
 
   // Common components area data
   --header-height: 80px;
@@ -68,14 +76,18 @@ const OutletWrapper = styled.div`
 `;
 
 const Layout = () => {
+  const isDarkMode = useSelector((state: RootState) => state.darkMode.isDarkMode);
+  console.log(isDarkMode);
   return (
-    <Wrapper>
-      <Header />
-      <OutletWrapper>
-        <Outlet />
-      </OutletWrapper>
-      <GlovalNavigation />
-    </Wrapper>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <Wrapper>
+        <Header />
+        <OutletWrapper>
+          <Outlet />
+        </OutletWrapper>
+        <GlovalNavigation />
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store/index.ts';
 
 import { worker } from './mocks/worker';
+import GlobalStyle from './styles/GlobalStyle.ts';
 if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
+      <GlobalStyle />
       <App />
     </Provider>
   </React.StrictMode>,
