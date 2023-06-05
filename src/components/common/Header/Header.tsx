@@ -17,7 +17,7 @@ const Container = styled.header`
 
   border-bottom: 1px var(--color-light-gray) solid;
 
-  background-color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.subBgColor};
 
   z-index: 999;
 

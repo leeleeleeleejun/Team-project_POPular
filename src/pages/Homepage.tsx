@@ -9,7 +9,11 @@ import { Store } from '../types/store';
 
 const Container = styled.div`
   width: 100%;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.bgColor};
+
+  * {
+    color: ${(props) => props.theme.textColor};
+  }
 `;
 
 const HomePage = () => {

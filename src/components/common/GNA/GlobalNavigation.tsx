@@ -16,7 +16,7 @@ const Container = styled.footer`
 
   padding: 0 30px;
 
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subBgColor};
 
   border-top: 1px var(--color-light-gray) solid;
 

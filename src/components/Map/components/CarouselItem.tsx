@@ -17,7 +17,7 @@ const Container = styled.div<{ idx: number }>`
   max-width: 300px;
   border-radius: 10px;
 
-  background-color: #fff;
+  background-color: ${(props) => props.theme.bgColor};
 
   transition: all 1s;
   transform-origin: center center;

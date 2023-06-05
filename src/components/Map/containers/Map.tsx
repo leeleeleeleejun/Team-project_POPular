@@ -67,7 +67,7 @@ const Container = styled.div`
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 
-    background-color: var(--color-white);
+    background-color: ${(props) => props.theme.bgColor};
     z-index: 500;
 
     transition: bottom 1s;

@@ -1,6 +1,8 @@
 export const lightTheme = {
   bgColor: '#fff',
 
+  subBgColor: '#fff',
+
   categoryTextColor: '#000',
   categoryColor: '#fff',
   categoryShadow: 'inset 5px 5px 10px #ededed,inset -5px -5px 10px #ffffff, 5px 5px 10px #0000001b',
@@ -25,6 +27,8 @@ export const lightTheme = {
 
 export const darkTheme = {
   bgColor: '#202121',
+
+  subBgColor: '#454545',
 
   categoryTextColor: '#fff',
   categoryColor: '#404040',
