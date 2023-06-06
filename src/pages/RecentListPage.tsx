@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Brand } from '../types/brand';
+import { Brand } from '../types/category';
 import { SNS } from '../types/sns';
 import StoreList from '../components/common/Store/StoreList';
 

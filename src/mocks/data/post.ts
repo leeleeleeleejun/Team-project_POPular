@@ -1,5 +1,5 @@
 import { BoardTypes } from '../../types/board';
-import { Brand } from '../../types/brand';
+import { Brand } from '../../types/category';
 import { Post } from '../../types/post';
 import { commentData } from './comment';
 

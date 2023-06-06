@@ -8,6 +8,7 @@ import { mapActions } from '../mapSlice';
 import { RootState } from '../../../store';
 import { useGetAllStoreQuery } from '../../../api/store';
 import SearchBox from '../components/SearchBox';
+import { storeData } from '../../../mocks/data/stores';
 
 interface IAddr {
   address: string;
@@ -137,6 +138,8 @@ const initial = true;
 
 const Map = () => {
   const dispatch = useDispatch();
+
+  console.log(JSON.stringify(storeData));
 
   const [openList, setOpenList] = useState<boolean>(false);
 

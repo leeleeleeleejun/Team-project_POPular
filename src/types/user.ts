@@ -1,4 +1,4 @@
-import { Brand } from './brand';
+import { Brand } from './category';
 import { Notification } from './notification';
 
 export interface UserOnlyProfile {
