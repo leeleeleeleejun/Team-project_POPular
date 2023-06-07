@@ -13,7 +13,7 @@ const PostItem = ({ post }: Props) => {
   const boardKorea = post.board === 'free' ? '자유게시판' : post.board === 'gather' ? '모집게시판' : '후기게시판';
 
   return (
-    <Container>
+    <Container key={post._id}>
       <PostItemInfo>
         <PostItemCategory>
           <PostItemCategoty report={boardKorea}>{boardKorea}</PostItemCategoty>
@@ -34,6 +34,10 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   height: 75px;
+
+  .link {
+    width: 100%;
+  }
 `;
 
 const PostItemImage = styled.div`
@@ -59,8 +63,6 @@ const PostItemImage = styled.div`
 
 const PostItemInfo = styled.div`
   width: 80%;
-  box-sizing: border-box;
-  padding-top: 10px;
 `;
 
 const PostItemCategoty = styled.span<{ report: string }>`
@@ -73,9 +75,9 @@ const PostItemCategoty = styled.span<{ report: string }>`
   background-color: ${(props) => {
     switch (props.report) {
       case '자유게시판':
-        return '#CD554D';
+        return 'rgb(100 104 241)';
       case '후기게시판':
-        return '#38B135';
+        return 'rgb(58 185 115)';
       case '모집게시판':
         return '#652CC1';
       default:
@@ -103,6 +105,7 @@ const PostItemTitle = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 5px;
 
   margin-top: 10px;
 
