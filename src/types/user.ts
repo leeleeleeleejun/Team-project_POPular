@@ -17,7 +17,6 @@ export interface User {
   follower: string[];
   following: string[];
   profile: string;
-  introduce: string;
   role: RoleTypes;
   interested_category: Category[];
   allow_notification: boolean;
