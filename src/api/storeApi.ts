@@ -14,7 +14,8 @@ export const getAllStores = async () => {
 };
 
 export const getStoreById = async (storeId: string) => {
-  const response = await (await fetch(`${API_PATH.STORE.GET.BY_ID}/${storeId}`)).json();
+  console.log(`${API_PATH.STORE.GET.BY_ID.replace(':storeId', storeId)}`);
+  const response = await (await fetch(`${API_PATH.STORE.GET.BY_ID.replace(':storeId', storeId)}`)).json();
   return response;
 };
 
@@ -42,7 +43,7 @@ export const useGetAllStores = () => {
 };
 
 export const useGetStoreById = (storeId: string) => {
-  return useQuery<Store[]>(['store', storeId], () => getStoreById(storeId));
+  return useQuery<Store>(['store', storeId], () => getStoreById(storeId));
 };
 
 export const usePostStore = () => {

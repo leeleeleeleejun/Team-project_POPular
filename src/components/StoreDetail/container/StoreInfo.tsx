@@ -3,6 +3,7 @@ import InfoPlace from '../components/InfoPlace';
 import InfoDetail from '../components/InfoDetail';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useGetStoreById } from '../../../api/storeApi';
 
 const Container = styled.div`
   display: flex;
@@ -104,16 +105,13 @@ const Container = styled.div`
 
 const StoreInfo = () => {
   const { storeId } = useParams();
-  async function fetchStore() {
-    const response = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
-    return response.json();
-  }
-  const { data: store, isLoading, isError } = useQuery(['store'], fetchStore);
+  const { data: store, isLoading, isError } = useGetStoreById(storeId as string);
 
   console.log(store);
 
   if (isError) return <h3>error</h3>;
   if (isLoading) return <h3>Loading...</h3>;
+
   return (
     <Container>
       <InfoDetail store={store} />

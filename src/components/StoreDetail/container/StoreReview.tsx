@@ -15,13 +15,13 @@ const Container = styled.section`
 
 const StoreReview = () => {
   const { storeId } = useParams();
-  const [page, setPage] = useState<number>(1);
   const { currentData: posts, isFetching } = useGetReviewPostByStoreQuery({ storeId: storeId });
+
   return (
     <Container>
-      <div className="review-list">
+      {/* <div className="review-list">
         <ReviewList posts={posts} isFetching={isFetching} />
-      </div>
+      </div> */}
     </Container>
   );
 };
