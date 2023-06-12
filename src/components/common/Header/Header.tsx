@@ -60,7 +60,7 @@ const Container = styled.header`
   @media all and (min-width: 768px) {
     .inner {
       justify-content: flex-start;
-      align-items: end;
+      align-items: center;
       height: fit-content;
 
       .prev-btn {
@@ -73,14 +73,16 @@ const Container = styled.header`
         font-size: 30px;
 
         color: var(--color-main);
+
+        img {
+          width: 150px;
+        }
       }
 
       nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        flex-grow: 1;
 
         .links {
           display: flex;
@@ -136,7 +138,7 @@ const Header = () => {
           </button>
         )}
         <Link className="logo" to={CLIENT_PATH.HOME}>
-          POPular
+          <img src="/images/logo.png" alt="임시로고" />
         </Link>
 
         <nav>
