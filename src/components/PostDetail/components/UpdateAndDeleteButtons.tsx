@@ -12,8 +12,14 @@ const Button = styled.button<{ update: boolean }>`
 `;
 
 const ButtonWrap = styled.div`
+  position: absolute;
+  right: 0;
   display: flex;
   justify-content: flex-end;
+
+  @media (max-width: 768px) {
+    top: 85px;
+  }
 `;
 
 const UpdateAndDelete = ({ deletePost, updatePost }: { deletePost: () => void; updatePost: () => void }) => {

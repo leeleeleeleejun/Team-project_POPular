@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 
 async function getFeeds(
   _limit: number,
-  offset: number = 1,
+  offset = 1,
   filter?: string | number | readonly string[],
   userId?: string | undefined,
 ): Promise<{ rows: Post[]; nextOffset: number; hasNextPage: boolean }> {
@@ -115,6 +115,10 @@ const PagePostList = () => {
 const Container = styled.div`
   position: static;
   margin-top: 30px;
+
+  @media all and (max-width: 767px) {
+    margin-top: 10px;
+  }
 `;
 
 const Loading = styled.div`

@@ -34,9 +34,11 @@ export const API_PATH = {
     },
     POST: {
       LOGIN: '/login',
+      CHECK_NICKNAME: `${API_BASE_URL}/users/checknickname`,
     },
     PUT: {},
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/users`,
+    PATCH: `${API_BASE_URL}/users/:userId`,
   },
 
   POST: {
@@ -45,11 +47,11 @@ export const API_PATH = {
       // 포스트 ID 조회
       BY_ID: `${API_BASE_URL}/feeds/:postId`,
       // 특정 유저의 전체 포스트 조회
-      BY_USER: '/post/user/:userId',
+      BY_USER: `${API_BASE_URL}/feeds/user/:userId`,
       // 포스트 게시판 조회
       BY_BOARD: '/post/board/:boardId',
       // 특정 스토어의 후기 조회
-      REVIEW_BY_STORE: `${API_BASE_URL}/feeds/free`,
+      REVIEW_BY_STORE: `${API_BASE_URL}/feeds/review/store/:storeId`,
       // 자유 게시판 스토 조회
       ALL_FREE_FEEDS: `${API_BASE_URL}/feeds/free`,
       // 후기 게시판 스토 조회
@@ -59,7 +61,7 @@ export const API_PATH = {
     },
     POST: `${API_BASE_URL}/feeds/`,
     PUT: `${API_BASE_URL}/feeds/:postId`,
-    DELETE: `${API_BASE_URL}/feeds/`,
+    DELETE: `${API_BASE_URL}/feeds`,
   },
 
   COMMENT: {

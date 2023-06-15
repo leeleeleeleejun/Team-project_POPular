@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Post } from '../types/post';
 import { Comment } from '../types/comment';
-import { useParams } from 'react-router-dom';
+import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
@@ -17,12 +17,14 @@ import StarIcon from '../components/common/Icons/StarIcon';
 import { getComments } from '../api/CommentApi';
 import MetaTag from '../components/SEO/MetaTag';
 import { API_PATH } from '../constants/path';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
 `;
 
 const FlexDiv = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -38,13 +40,26 @@ const RatingsWrap = styled.div`
   }
 `;
 
-async function fetchData(postId = '', setPost: React.Dispatch<React.SetStateAction<Post | null>>) {
-  const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
-  const result: Post = await response.json();
-  setPost(result);
+async function fetchData(
+  postId = '',
+  setPost: React.Dispatch<React.SetStateAction<Post | null>>,
+  navigate: NavigateFunction,
+) {
+  try {
+    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
+    if (response.status === 404) {
+      throw new Error('해당 페이지가 존재하지 않습니다.');
+    }
+    const result: Post = await response.json();
+    setPost(result);
+  } catch (err: any) {
+    alert(err.message);
+    navigate(-1);
+  }
 }
 
 const PostDetailPage = () => {
+  const navigate = useNavigate();
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
   const comments = useAppSelector((state) => state.PostDetailSlice.comment);
@@ -70,7 +85,7 @@ const PostDetailPage = () => {
   );
 
   useEffect(() => {
-    fetchData(postId, setPost);
+    fetchData(postId, setPost, navigate);
   }, []);
 
   useEffect(() => {
@@ -89,6 +104,7 @@ const PostDetailPage = () => {
   if (post === null) {
     return <div>Loading...</div>;
   }
+
   return (
     <Container>
       <MetaTag title={`POPULAR | ${post.title}`} />
@@ -96,6 +112,8 @@ const PostDetailPage = () => {
         boardType={post.board}
         title={post.title}
         nickName={post.author.nickname}
+        profile={post.author.profile}
+        follower={post.author.follower.length}
         authorId={post.author._id}
         updatedAt={post.updatedAt}
         likes={post.likes.length}
@@ -104,17 +122,19 @@ const PostDetailPage = () => {
       />
       {post.store_id && (
         <StoreWrap>
-          <StoreItem store={post.store_id} />
-          {post.ratings && (
-            <RatingsWrap>
-              <span>평점:</span>
-              {Array(post.ratings)
-                .fill(0)
-                .map((i, index) => (
-                  <StarIcon key={index} fill="var(--color-sub)" width={20} />
-                ))}
-            </RatingsWrap>
-          )}
+          <Link to={`/store/${post.store_id._id}`}>
+            <StoreItem store={post.store_id} />
+            {post.ratings && (
+              <RatingsWrap>
+                <span>평점:</span>
+                {Array(post.ratings)
+                  .fill(0)
+                  .map((i, index) => (
+                    <StarIcon key={index} fill="var(--color-sub)" width={20} />
+                  ))}
+              </RatingsWrap>
+            )}
+          </Link>
         </StoreWrap>
       )}
       <PostContent content={post ? post.content : ''}></PostContent>

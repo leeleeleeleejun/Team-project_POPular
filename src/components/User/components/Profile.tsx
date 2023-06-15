@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { User } from '../../../types/user';
+// import { Post } from '../../../types/post';
 import ProfileFollow from './ProfileFollow';
 import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import MetaTag from '../../SEO/MetaTag';
+import { useGetFeedsByUserId } from '../../../api/feedApi';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -19,6 +21,8 @@ const Profile = () => {
     getUserInfo();
     fetchData();
   }, [userId, userInfo]);
+
+  const { data: feeds } = useGetFeedsByUserId(userId!);
 
   const getUserInfo = async () => {
     try {
@@ -126,7 +130,7 @@ const Profile = () => {
           </div>
         </UserProfile>
         <ProfileList>
-          <ProfileFollow title={'게시물'} number={33} />
+          <ProfileFollow title={'게시물'} number={feeds?.totalDocs ? feeds.totalDocs : 0} />
           <ProfileFollow title={'팔로워'} number={followerCount} />
           <ProfileFollow title={'팔로잉'} number={user.following.length} />
         </ProfileList>
@@ -154,6 +158,10 @@ const Profile = () => {
 
 const Container = styled.div`
   padding: 20px 0px;
+
+  @media all and (max-width: 767px) {
+    padding: 5px 0px 20px;
+  }
 `;
 
 const ProfileInfo = styled.div`
@@ -180,11 +188,9 @@ const UserProfile = styled.div`
     }
 
     .profile-style {
-      width: 110px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 `;
