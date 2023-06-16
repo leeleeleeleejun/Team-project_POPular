@@ -71,7 +71,7 @@ const ReviewList = ({ posts, isFetching }: Props) => {
           후기 게시판
         </Button>
       </ReviewBoardLink>
-      {posts!.map((post) => {
+      {posts!.slice(0, 10).map((post) => {
         return (
           <li key={post._id}>
             <Link to={`/community/post/${post._id}`}>

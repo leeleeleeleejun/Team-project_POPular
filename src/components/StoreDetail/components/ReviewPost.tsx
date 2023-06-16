@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Post } from '../../../types/post';
 import { useGetUserById } from '../../../api/userApi';
+import { Link } from 'react-router-dom';
 
 const Container = styled.article`
   margin-bottom: 20px;
@@ -9,6 +10,7 @@ const Container = styled.article`
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 14px;
+    margin-bottom: 20px;
 
     background-color: #eeeeee;
 
@@ -67,8 +69,6 @@ interface Props {
 const ReviewPost = ({ post }: Props) => {
   const { data: user } = useGetUserById(post.author);
 
-  console.log(post);
-
   if (!user) return <></>;
 
   return (
@@ -79,11 +79,13 @@ const ReviewPost = ({ post }: Props) => {
             <img className="thumbnail" src={post.images[0]} alt={post.title} />
           </figure>
         )}
-        <div className="user-info">
-          {user.profile ? <img src="/defaultProfile.svg" /> : <img src={user.profile} />}
-          <p className="user-name">{user.nickname}</p>
-          <span className="user-followers"> · {user.follower.length} followers</span>
-        </div>
+        <Link to={`/community/user/${user._id}`}>
+          <div className="user-info">
+            {user.profile ? <img src="/defaultProfile.svg" /> : <img src={user.profile} />}
+            <p className="user-name">{user.nickname}</p>
+            <span className="user-followers"> · {user.follower.length} followers</span>
+          </div>
+        </Link>
         <p className="content">{post.content.replace(/<[^>]*>?/g, '')}</p>
       </div>
     </Container>
