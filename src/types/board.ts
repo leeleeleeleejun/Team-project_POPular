@@ -3,12 +3,12 @@ import { Post } from './post';
 export const enum BoardTypes {
   all = 'all',
   review = 'review',
-  gether = 'gether',
+  gather = 'gather',
   free = 'free',
 }
 
 export interface Board {
-  id: string;
+  _id: string;
   title: BoardTypes;
   posts: Post[];
 }

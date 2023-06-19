@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import Tag from '../Tag/Tag';
+import dayjs from 'dayjs';
 
 interface Props {
   store: Store;
+  onClick?: () => void;
 }
 
 const Container = styled.article`
+  position: relative;
+
   display: flex;
   width: 100%;
+  min-width: 300px;
   max-width: 100%;
   height: 150px;
 
@@ -21,12 +26,15 @@ const Container = styled.article`
   figure {
     min-height: 100%;
     min-width: 100px;
+    aspect-ratio: 1/1;
     margin-right: 20px;
     border-radius: 6px;
     overflow: hidden;
 
     img {
+      width: 100%;
       height: 100%;
+      object-fit: cover;
       transition: transform 1s;
     }
   }
@@ -60,35 +68,55 @@ const Container = styled.article`
       width: fit-content;
       font-size: var(--font-small);
     }
+
+    .scraps {
+      position: absolute;
+      right: 30px;
+      bottom: 30px;
+      color: #adadad;
+      font-weight: 600;
+    }
+  }
+
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   &:hover {
-    background-color: var(--color-light-gray);
-
     cursor: pointer;
-
-    img {
-      transform: scale(1.4);
-    }
   }
 `;
 
-const StoreItem = ({ store }: Props) => {
-  // 주소지에서 상위 2단계만 추출
-  const location = store.location.split(' ').slice(0, 2).join(' ');
-
+const StoreItem = ({ store, onClick }: Props) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <figure>
         <img src={store.images[0]} alt={store.title} />
       </figure>
       <div className="store-info">
         <h3 className="store-title">{store.title}</h3>
-        <p className="store-location">{location}</p>
-        <p className="store-date">
-          {store.startDate} - {store.endDate}
+        <p className="store-location">
+          {store.postcode.sido} {store.postcode.sigungu}
         </p>
-        <Tag>{store.brand}</Tag>
+        <p className="store-date">
+          {dayjs(store.start_date).format('YYYY/MM/DD')} - {dayjs(store.end_date).format('YYYY/MM/DD')}
+        </p>
+        <div className="scraps">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#adadad" width="16" height="14" viewBox="0 0 24 20">
+            <path d="M19 24l-7-6-7 6v-24h14v24z" />
+          </svg>
+          {store.scraps.length}
+        </div>
+        <Tag>{store.category}</Tag>
       </div>
     </Container>
   );

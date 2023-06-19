@@ -1,10 +1,19 @@
-import { BoardTypes } from './board';
-import { UserOnlyProfile } from './user';
+import { User } from './user';
+
+export const enum CommentParentType {
+  feed = 'Feed',
+  comment = 'Comment',
+}
 
 export interface Comment {
-  id: string;
-  author: UserOnlyProfile;
+  _id: string;
+  author: User;
   content: string;
-  post: any;
-  board: BoardTypes;
+  parent: {
+    type: string;
+    id: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+  recomments?: Comment[];
 }

@@ -1,55 +1,82 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import StoreTitle from '../components/StoreDetail/container/StoreTitle';
+import StoreInfo from '../components/StoreDetail/container/StoreInfo';
+import StoreReview from '../components/StoreDetail/container/StoreReview';
+import { useParams } from 'react-router-dom';
+import { useGetStoreById } from '../api/storeApi';
+import MetaTag from '../components/SEO/MetaTag';
 import { Store } from '../types/store';
-import Title from '../components/StoreDetail/Title';
-import DetailInfo from '../components/StoreDetail/DetailInfo';
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
+type PathParams = {
+  storeId: string | undefined;
+};
 
+const Container = styled.div<{ isDetail: boolean }>`
   .detail-top-btn {
     display: flex;
     width: 100%;
     height: 50px;
+
+    position: relative;
+  }
+
+  .detail-top-btn::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 2px;
+    background-color: var(--color-main);
+
+    transition: all 0.3s;
+
+    transform: ${(props) => (props.isDetail ? 'translateX(0)' : 'translateX(100%)')};
   }
 
   .detail-info-btn,
   .store-comment-btn {
-    width: 50%;
+    width: 100%;
     background-color: #ffffff;
-    border-bottom: 2px solid blue;
     font-weight: 700;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
-  .active {
-    border-bottom: 2px solid rgba(0, 0, 255, 0.2);
-  }
+  overflow-x: hidden;
 `;
 
-const StoreDetailPage = () => {
-  const [store, setStore] = useState<Store | undefined>(undefined);
+const addRecentStore = (store: Store) => {
+  const recentStoreString = window.localStorage.getItem('store');
+  const recentStore: Store[] = recentStoreString ? JSON.parse(recentStoreString) : [];
+  const isStoreExist = recentStore.some((s: Store) => s._id === store._id);
 
-  const [isDetail, setIsDetail] = useState<boolean>(true);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    const response = await fetch('/store/id/321323');
-    const result: Store = await response.json();
-
-    if (!result) {
-      throw new Error('no result');
-    }
-
-    setStore(result);
+  if (recentStore.length > 4) {
+    recentStore.pop();
   }
 
+  if (!isStoreExist) {
+    const newRecentStore = [store, ...recentStore];
+    window.localStorage.setItem('store', JSON.stringify(newRecentStore));
+  }
+};
+
+const StoreDetailPage = () => {
+  const [isDetail, setIsDetail] = useState<boolean>(true);
+  const { storeId } = useParams<PathParams>();
+  const { data: store, isLoading, isError } = useGetStoreById(storeId!);
+
+  if (isLoading) return <></>;
+
+  if (store) addRecentStore(store);
+
   return (
-    <Container>
-      <Title store={store}></Title>
+    <Container isDetail={isDetail}>
+      <MetaTag title={`POPULAR | ${store?.title}`} url="www.popular.com" />
+      <StoreTitle store={store!} />
       <div className="detail-top-btn">
         <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
           상세 정보
@@ -61,7 +88,11 @@ const StoreDetailPage = () => {
           후기
         </button>
       </div>
-      {isDetail ? <DetailInfo store={store} /> : <div>hello</div>}
+      {isDetail ? (
+        <StoreInfo store={store!} isLoading={isLoading} isError={isError} />
+      ) : (
+        <StoreReview storeId={storeId!} />
+      )}
     </Container>
   );
 };

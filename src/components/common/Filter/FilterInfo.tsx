@@ -8,7 +8,7 @@ const FilterIconWrap = styled(FilterIcon)`
 const FilterInfoItem = styled.div`
   color: var(--color-sub);
   margin: 0 5px;
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semi-bold);
   + div {
     border-left: 2px solid var(--color-sub);
     padding-left: 10px;
@@ -17,7 +17,14 @@ const FilterInfoItem = styled.div`
 
 const FilterInfoItemWrap = styled.div`
   display: flex;
-  margin-top: 10px;
+  margin: 14px 0;
+`;
+
+const CancelFilter = styled.button`
+  background: none;
+  color: var(--color-red);
+  cursor: pointer;
+  margin-left: 5px;
 `;
 
 const FilterInfo = ({
@@ -25,22 +32,65 @@ const FilterInfo = ({
   address,
   startDate,
   endDate,
+  durationFilterUse,
+  setFilterAddressUse,
+  setFilterCategoryUse,
+  setFilterDurationUse,
+  setFilterAddressValue,
+  setFilterCategoryValue,
 }: {
-  category: string;
-  address: string;
-  startDate: { year: number; month: number; day: number };
-  endDate: { year: number; month: number; day: number };
+  category: { value: string; use: boolean };
+  address: { value: string; use: boolean };
+  durationFilterUse: boolean;
+  startDate: string;
+  endDate: string;
+  setFilterAddressUse: (use: boolean) => void;
+  setFilterCategoryUse: (use: boolean) => void;
+  setFilterDurationUse: (category: boolean) => void;
+  setFilterAddressValue: (address: string) => void;
+  setFilterCategoryValue: (category: string) => void;
 }) => {
-  const start = `${startDate.year}-${startDate.month}-${startDate.day}`;
-  const end = `${endDate.year}-${endDate.month}-${endDate.day}`;
-  const today = new Date().toLocaleDateString();
-  const dateBoolean = today === new Date(start).toLocaleDateString() && today === new Date(end).toLocaleDateString();
   return (
     <FilterInfoItemWrap>
-      <FilterIconWrap />
-      {category !== '카테고리' && <FilterInfoItem>{category}</FilterInfoItem>}
-      {address !== '지역' && <FilterInfoItem>{address}</FilterInfoItem>}
-      {!dateBoolean && <FilterInfoItem>{`${start}~${end}`}</FilterInfoItem>}
+      {(category.use || address.use || durationFilterUse) && <FilterIconWrap />}
+      {category.use && (
+        <FilterInfoItem>
+          {category.value}
+          <CancelFilter
+            onClick={() => {
+              setFilterCategoryValue('카테고리');
+              setFilterCategoryUse(false);
+            }}
+          >
+            X
+          </CancelFilter>
+        </FilterInfoItem>
+      )}
+      {address.use && (
+        <FilterInfoItem>
+          {address.value}
+          <CancelFilter
+            onClick={() => {
+              setFilterAddressValue('지역');
+              setFilterAddressUse(false);
+            }}
+          >
+            X
+          </CancelFilter>
+        </FilterInfoItem>
+      )}
+      {durationFilterUse && (
+        <FilterInfoItem>
+          {`${startDate}~${endDate}`}
+          <CancelFilter
+            onClick={() => {
+              setFilterDurationUse(false);
+            }}
+          >
+            X
+          </CancelFilter>
+        </FilterInfoItem>
+      )}
     </FilterInfoItemWrap>
   );
 };

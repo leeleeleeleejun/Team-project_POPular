@@ -1,43 +1,116 @@
 import { BoardTypes } from '../../types/board';
-import { Brand } from '../../types/brand';
 import { Post } from '../../types/post';
-import { commentData } from './comment';
+import { userData } from './user';
 
 export const postData: Post[] = [
   {
-    id: '1234',
+    _id: '1234',
     title: '테스트 포스트',
-    author: {
-      id: '12341231',
-      email: 'elice@elice.com',
-      pw: '213231',
-      nickname: '엘리스',
-      scrap: ['321323', '15451'],
-      phoneNumber: '010-0000-1234',
-      follower: [
-        {
-          id: '134242',
-          nickname: '체셔',
-          profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
-        },
-      ],
-      following: [
-        {
-          id: '134242',
-          nickname: '체셔',
-        },
-      ],
-      isEnterpriser: false,
-      profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
-      brand: Brand.art,
-      allowNotification: false,
-      notifications: [],
-    },
+    author: userData[0],
     board: BoardTypes.free,
     content: '<p>안녕하세요</p>',
-    likes: 10,
-    report: 2,
+    likes: [],
+    reports: [],
+    views: 0,
+    images: [],
+    updatedAt: '2023-05-30 15:17:01',
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
+  },
+  {
+    _id: '12346',
+    title: '테스트 포스트',
+    author: userData[1],
+    board: BoardTypes.free,
+    content: '<p>안녕하세요</p>',
+    likes: [],
+    reports: [],
+
+    images: [],
+    views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
+  },
+  {
+    _id: '75648',
+    title: '테스트 포스트',
+    author: userData[2],
+    board: BoardTypes.free,
+    content: '<p>안녕하세요</p>',
+    likes: [],
+    reports: [],
+
+    images: [],
+    views: 0,
+    updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
+  },
+  {
+    _id: '373685',
+    title: '테스트 포스트',
+    author: userData[1],
+    board: BoardTypes.free,
+    content: '<p>안녕하세요</p>',
+    likes: [],
+    reports: [],
+
+    images: [],
+    views: 0,
+    updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
+  },
+  {
+    _id: '7543567',
+    title: '테스트 포스트',
+    author: userData[1],
+    board: BoardTypes.free,
+    content: '<p>안녕하세요</p>',
+    likes: [],
+    reports: [],
+
+    images: [],
+    views: 0,
+    updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
+  },
+  {
+    _id: '624526',
+    title: '테스트 포스트',
+    author: userData[1],
+    board: BoardTypes.free,
+    content: '<p>안녕하세요</p>',
+    likes: [],
+    reports: [],
+
+    images: [],
+    views: 0,
+    updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
+  },
+  {
+    _id: '52432',
+    title: '테스트 포스트',
+    author: userData[1],
+    board: BoardTypes.free,
+    content: '<p>안녕하세요</p>',
+    likes: [],
+    reports: [],
+
+    images: [],
+    views: 0,
+    updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
 ];

@@ -8,6 +8,7 @@ import { CLIENT_PATH } from '../../../constants/path';
 import UserIcon from '../Icons/UserIcon';
 
 const Container = styled.footer`
+  display: none;
   position: fixed;
   bottom: 0;
 
@@ -16,7 +17,13 @@ const Container = styled.footer`
 
   padding: 0 30px;
 
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+
+  z-index: 999;
+  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 
   border-top: 1px var(--color-light-gray) solid;
 
@@ -66,6 +73,10 @@ const Container = styled.footer`
       cursor: pointer;
     }
   }
+
+  @media all and (max-width: 767px) {
+    display: block;
+  }
 `;
 
 const GlobalNavigation = () => {
@@ -90,13 +101,13 @@ const GlobalNavigation = () => {
             <p>홈</p>
           </div>
         </NavLink>
-        <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={CLIENT_PATH.COMMUNITY} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <CommunityIcon />
             <p>커뮤니티</p>
           </div>
         </NavLink>
-        <NavLink to={`${CLIENT_PATH.USER_MENU}`} end className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={`${CLIENT_PATH.USER_MENU}`} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <UserIcon />
             <p>마이페이지</p>

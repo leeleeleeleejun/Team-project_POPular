@@ -1,26 +1,27 @@
-// import UserProfile from '../components/UserMenu/components/UserProfile';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import MemberMenu from '../components/UserMenu/components/MemberMenu';
 import NonMemberMenu from '../components/UserMenu/components/NonMemberMenu';
-import { API_PATH } from '../constants/path';
+import MetaTag from '../components/SEO/MetaTag';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const UserMenuPage = () => {
-  const [isMember, setIsMember] = useState(false);
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
 
-  useEffect(() => {
-    fetch(API_PATH.USER.GET.ALL)
-      .then((res) => res.json())
-      .then((data) => data && setIsMember(true));
-  }, []);
-
-  return <Container>{isMember ? <MemberMenu /> : <NonMemberMenu />}</Container>;
+  return (
+    <Container>
+      <MetaTag title={`POPULAR | 마이페이지`} />
+      {userData ? <MemberMenu /> : <NonMemberMenu />}
+    </Container>
+  );
 };
 
 export default UserMenuPage;
 
 const Container = styled.div`
-  width: 350px;
-  margin: 0 auto;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

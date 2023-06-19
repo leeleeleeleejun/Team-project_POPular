@@ -1,21 +1,27 @@
-import { Brand } from './brand';
-import { Notification } from './notification';
+import { Category } from './category';
+import { Follow } from './follow';
 
-export interface UserOnlyProfile {
-  id: string;
-  nickname: string;
-  profile?: string;
+export const enum RoleTypes {
+  USER = 'user',
+  ADMIN = 'admin',
+  ENTERPRISER = 'enterpriser',
 }
 
-export interface User extends UserOnlyProfile {
+export interface User {
+  _id: string;
   email: string;
   pw: string;
-  scrap: string[];
-  phoneNumber: string;
-  follower: UserOnlyProfile[];
-  following: UserOnlyProfile[];
-  isEnterpriser: boolean;
-  brand: Brand;
-  allowNotification: boolean;
-  notifications: Notification[];
+  name: string;
+  nickname: string;
+  phone_number: string;
+  follower: Follow[];
+  following: Follow[];
+  profile: string;
+  introduce: string;
+  role: RoleTypes;
+  interested_category: Category[];
+  allow_notification: boolean;
+  scraps: string[];
+  createdAt: string;
+  notifications: string[];
 }

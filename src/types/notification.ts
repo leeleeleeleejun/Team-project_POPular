@@ -1,17 +1,22 @@
+import { BoardTypes } from './board';
 import { Comment } from './comment';
 import { Store } from './store';
-import { UserOnlyProfile } from './user';
+import { User } from './user';
 
-export const enum NotificationTypes {
-  follow = 'follow',
-  comment = 'comment',
-  ad = 'ad',
+export const enum NotificationType {
+  Follow = 'follow',
+  Comment = 'comment',
+  Recomment = 'recomment',
+  Ad = 'ad',
 }
 
-export type Content = UserOnlyProfile | Store | Comment;
-
 export interface Notification {
-  type: NotificationTypes;
-  content: Content;
+  _id: string;
+  type: NotificationType;
+  board?: BoardTypes;
+  user_id: string;
+  content_user?: User | null;
+  content_comment?: Comment | null;
+  content_store?: Store | null;
   checked: boolean;
 }

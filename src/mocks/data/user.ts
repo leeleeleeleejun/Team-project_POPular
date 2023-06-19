@@ -1,60 +1,23 @@
-import { Brand } from '../../types/brand';
-import { User } from '../../types/user';
-import { notificationData } from './notification';
+import { Category } from '../../types/category';
+import { RoleTypes, User } from '../../types/user';
 
 export const userData: User[] = [
   {
-    id: '12341231',
+    _id: '648490f8dde175dd0d146256',
     email: 'elice@elice.com',
     pw: '213231',
+    name: '홍길동',
     nickname: '엘리스',
-    scrap: ['321323', '15451'],
-    phoneNumber: '010-0000-1234',
-    follower: [
-      {
-        id: '134242',
-        nickname: '체셔',
-        profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
-      },
-    ],
-    following: [
-      {
-        id: '134242',
-        nickname: '체셔',
-      },
-    ],
-    isEnterpriser: false,
+    scraps: ['321323', '15451'],
+    phone_number: '010-0000-1234',
+    introduce: '안녕하세요',
+    role: RoleTypes.USER,
+    allow_notification: true,
+    follower: [],
+    following: [],
     profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
-    brand: Brand.art,
-    allowNotification: false,
-    notifications: notificationData,
-  },
-  {
-    id: '134242',
-    email: 'elice231@elice.com',
-    pw: '213231',
-    nickname: '체셔',
-    scrap: ['321323', '15451'],
-    phoneNumber: '010-0000-1234',
-    follower: [],
-    following: [],
-    isEnterpriser: false,
-    brand: Brand.character,
-    allowNotification: false,
-    notifications: [],
-  },
-  {
-    id: '421124',
-    email: 'elice122@elice.com',
-    pw: '213231',
-    nickname: '모자장수',
-    scrap: ['321323', '15451'],
-    phoneNumber: '010-123-1234',
-    follower: [],
-    following: [],
-    isEnterpriser: false,
-    brand: Brand.clothes,
-    allowNotification: false,
-    notifications: [],
+    interested_category: [Category.art],
+    createdAt: '2023-06-09T09:03:48.455+00:00',
+    notifications: ['1234', '1235'],
   },
 ];

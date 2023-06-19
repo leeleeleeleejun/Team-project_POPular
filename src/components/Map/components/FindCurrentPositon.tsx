@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const Container = styled.button`
-  position: fixed;
-  top: 160px;
+  position: absolute;
+  top: 50px;
   left: 50%;
 
   width: 130px;
@@ -27,6 +27,12 @@ const Container = styled.button`
     cursor: pointer;
 
     transform: translateX(-50%) scale(1.2);
+  }
+
+  @media all and (max-width: 767px) {
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 

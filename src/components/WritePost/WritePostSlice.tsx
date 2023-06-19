@@ -1,49 +1,68 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import useFilterActions from '../../Hooks/useFilterActions';
-import useSetTabAction from '../../Hooks/useTabsActions';
+const today = new Date().toISOString().slice(0, 10);
 
 export interface WritePostInitialState {
   tab: string;
+  searchValue: string;
+  postTitle: string;
   postContent: string;
-  rating: number;
-  filter: {
-    address: string;
-    category: string;
-    duration: {
-      show: boolean;
-      StartDate: {
-        year: number;
-        month: number;
-        day: number;
-      };
-      endDate: {
-        year: number;
-        month: number;
-        day: number;
-      };
-    };
+  ratings: number;
+  choiceStoreId: string;
+  addressFilter: {
+    value: string;
+    use: boolean;
+  };
+  categoryFilter: {
+    value: string;
+    use: boolean;
+  };
+  durationFilter: {
+    show: boolean;
+    use: boolean;
+    startDate: string;
+    endDate: string;
+  };
+  isUpdate: {
+    use: boolean;
+    id: string;
   };
 }
 
 export interface SetDate {
-  start: boolean;
-  date: number;
+  year: number;
+  month: number;
+  day: number;
 }
 
-const Today = new Date();
+export interface isUpdate {
+  use: boolean;
+  id: string;
+}
 
 const initialState: WritePostInitialState = {
   tab: '자유게시판',
+  postTitle: '',
   postContent: '',
-  rating: 1,
-  filter: {
-    address: '지역',
-    category: '카테고리',
-    duration: {
-      show: false,
-      StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
-      endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
-    },
+  ratings: 1,
+  choiceStoreId: '',
+  searchValue: '',
+  addressFilter: {
+    value: '지역',
+    use: false,
+  },
+  categoryFilter: {
+    value: '카테고리',
+    use: false,
+  },
+  durationFilter: {
+    show: false,
+    use: false,
+    startDate: today,
+    endDate: today,
+  },
+  isUpdate: {
+    use: false,
+    id: '',
   },
 };
 
@@ -52,31 +71,49 @@ const WritePostSlice = createSlice({
   initialState,
   reducers: {
     setTab(state, action: PayloadAction<string>) {
-      useSetTabAction.setTab(state, action);
+      state.tab = action.payload;
     },
-    setFilterAddress(state, action: PayloadAction<string>) {
-      useFilterActions.setFilterAddress(state, action);
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
     },
-    setFilterCategory(state, action: PayloadAction<string>) {
-      useFilterActions.setFilterCategory(state, action);
+    setFilterAddressValue(state, action: PayloadAction<string>) {
+      state.addressFilter.value = action.payload;
     },
-    setFilterDurationYear(state, action: PayloadAction<SetDate>) {
-      useFilterActions.setFilterDurationYear(state, action);
+    setFilterAddressUse(state, action: PayloadAction<boolean>) {
+      state.addressFilter.use = action.payload;
     },
-    setFilterDurationMonth(state, action: PayloadAction<SetDate>) {
-      useFilterActions.setFilterDurationMonth(state, action);
+    setFilterCategoryValue(state, action: PayloadAction<string>) {
+      state.categoryFilter.value = action.payload;
     },
-    setFilterDurationDay(state, action: PayloadAction<SetDate>) {
-      useFilterActions.setFilterDurationDay(state, action);
+    setFilterCategoryUse(state, action: PayloadAction<boolean>) {
+      state.categoryFilter.use = action.payload;
+    },
+    setFilterStartDate(state, action: PayloadAction<string>) {
+      state.durationFilter.startDate = action.payload;
+    },
+    setFilterEndDate(state, action: PayloadAction<string>) {
+      state.durationFilter.endDate = action.payload;
+    },
+    setFilterDurationUse(state, action: PayloadAction<boolean>) {
+      state.durationFilter.use = action.payload;
     },
     setFilterDurationShow(state, action: PayloadAction<boolean>) {
-      useFilterActions.setFilterDurationShow(state, action);
+      state.durationFilter.show = action.payload;
     },
-    setPostContent(state, action) {
+    setPostTitle(state, action: PayloadAction<string>) {
+      state.postTitle = action.payload;
+    },
+    setPostContent(state, action: PayloadAction<string>) {
       state.postContent = action.payload;
     },
-    setRating(state, action) {
-      state.rating = action.payload;
+    setRating(state, action: PayloadAction<number>) {
+      state.ratings = action.payload;
+    },
+    setChoiceStoreId(state, action: PayloadAction<string>) {
+      state.choiceStoreId = action.payload;
+    },
+    setIsUpdate(state, action: PayloadAction<isUpdate>) {
+      state.isUpdate = action.payload;
     },
   },
 });

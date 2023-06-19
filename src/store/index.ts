@@ -2,22 +2,24 @@ import { configureStore } from '@reduxjs/toolkit';
 import CommunitySlice from '../components/Community/CommunitySlice';
 import WritePostSlice from '../components/WritePost/WritePostSlice';
 import UserSlice from '../components/User/UserSlice';
-import { mapReducer } from '../components/Map/mapSlice';
-import { storeAPI } from '../api/store';
+import PostDetailSlice from '../components/PostDetail/PostDetailSlice';
+import SearchSlice from '../components/Search/SearchSlice';
+import { api } from '../api/useQueries';
 
 const store = configureStore({
   reducer: {
-    map: mapReducer,
     CommunitySlice,
     WritePostSlice,
+    PostDetailSlice,
     UserSlice,
-    [storeAPI.reducerPath]: storeAPI.reducer,
+    SearchSlice,
+    [api.reducerPath]: api.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(storeAPI.middleware),
+    }).concat(api.middleware),
 });
 
 export default store;

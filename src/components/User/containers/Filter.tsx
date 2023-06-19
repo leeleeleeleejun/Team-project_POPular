@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter } from '../UserSlice';
+import { RootState } from '../../../store';
 
 interface Option {
   value: string;
@@ -6,9 +9,12 @@ interface Option {
 }
 
 const Filter = ({ options }: { options: Option[] }) => {
+  const filter = useSelector((state: RootState) => state.UserSlice.filter);
+  const dispatch = useDispatch();
+
   return (
     <Container>
-      <select>
+      <select value={filter} onChange={(e) => dispatch(setFilter(e.target.value))}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.name}
@@ -22,7 +28,7 @@ const Filter = ({ options }: { options: Option[] }) => {
 const Container = styled.div`
   width: 100%;
   position: relative;
-  height: 40px;
+  height: 20px;
 
   select {
     border: none;
@@ -30,6 +36,8 @@ const Container = styled.div`
     padding: 5px 15px;
     position: absolute;
     right: 10px;
+    font-size: var(--font-small);
+    font-weight: var(--weight-regular);
   }
 `;
 

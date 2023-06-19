@@ -4,8 +4,36 @@ import StoreItem from './StoreItem';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  stores: Store[] | undefined;
+  stores: Store[];
 }
+
+const StoreList = ({ stores }: Props) => {
+  return (
+    <Container className="store-list">
+      {stores.length > 0 ? (
+        <ul>
+          {stores.map((store) => (
+            <li key={store._id}>
+              <Link to={`/store/${store._id}`}>
+                <StoreItem store={store} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="nothing">
+          <p>
+            해당 스토어가
+            <br />
+            존재하지 않습니다!
+          </p>
+        </div>
+      )}
+    </Container>
+  );
+};
+
+export default StoreList;
 
 const Container = styled.div`
   width: 100%;
@@ -26,31 +54,3 @@ const Container = styled.div`
     word-break: keep-all;
   }
 `;
-
-const StoreList = ({ stores }: Props) => {
-  return (
-    <Container className="store-list">
-      {stores ? (
-        <ul>
-          {stores.map((store) => (
-            <li key={store.id}>
-              <Link to={`/store/${store.id}`}>
-                <StoreItem store={store} />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="nothing">
-          <p>
-            해당 스토어가
-            <br />
-            존재하지 않습니다!
-          </p>
-        </div>
-      )}
-    </Container>
-  );
-};
-
-export default StoreList;

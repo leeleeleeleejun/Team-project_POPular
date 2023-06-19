@@ -3,34 +3,61 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   text: string;
-  type: 'follow' | 'profileEdit';
+  type: 'follow' | 'profileEdit' | 'unfollow';
+  link?: string | undefined;
+  onClick?: () => void;
 }
 
-const ProfileButton = ({ text, type }: Props) => {
+const ProfileButton = ({ text, type, link, onClick }: Props) => {
   const buttonClassName = `ButtonType_${type}`;
   return (
-    <Button className={buttonClassName}>
-      <Link className="button-link" to={''}>
-        {text}
-      </Link>
-    </Button>
+    <>
+      {link ? (
+        <Button className={buttonClassName}>
+          <Link className="button-link" to={link}>
+            {text}
+          </Link>
+        </Button>
+      ) : (
+        <Button className={buttonClassName} onClick={onClick}>
+          {text}
+        </Button>
+      )}
+    </>
   );
 };
 
 const Button = styled.button`
   border-radius: 4px;
-
-  .button-link {
-    font-size: var(--font-micro);
-    padding: 8px 18px;
-    display: block;
-  }
+  font-size: 12px;
+  padding: 8px 18px;
+  display: block;
+  color: #fff;
+  cursor: pointer;
 
   &.ButtonType_follow {
     background-color: var(--color-main);
+    transition: all 0.2s;
 
     .button-link {
       color: var(--color-light-gray);
+    }
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  &.ButtonType_unfollow {
+    background-color: var(--color-light-black);
+    transition: all 0.2s;
+
+    .button-link {
+      color: var(--color-light-gray);
+    }
+
+    &:hover {
+      filter: brightness(1.2);
     }
   }
 
