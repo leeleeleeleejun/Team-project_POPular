@@ -102,8 +102,10 @@ const PostRegisterButtonContainer = () => {
       <PostRegisterButton
         isUpdate={true}
         onClick={() => {
-          alert('이전 페이지로 돌아갑니다.');
-          navigate(-1);
+          const answer = confirm('해당 페이지를 벗어나면 작성한 내용이 사라집니다.');
+          if (answer) {
+            navigate(-1);
+          }
         }}
       >
         취소
