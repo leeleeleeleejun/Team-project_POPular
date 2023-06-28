@@ -4,17 +4,8 @@ import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks'
 import { WritePostSliceActions } from '../WritePostSlice';
 import { useState, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
-import { API_PATH, CLIENT_PATH } from '../../../constants/path';
-import callApi from '../../../utils/callApi';
-
-export type writePostBody = {
-  ratings?: number | undefined;
-  store_id?: string | undefined;
-  title: string;
-  author: string | undefined;
-  board: string;
-  content: string;
-};
+import { CLIENT_PATH } from '../../../constants/path';
+import { createFeed, updateFeed, writePostBody } from '../../../api/feedApi';
 
 // 게시글 생성 스키마 확인
 const PostRegisterButtonContainer = () => {
@@ -67,9 +58,9 @@ const PostRegisterButtonContainer = () => {
     try {
       let response: Response;
       if (isUpdate.use) {
-        response = await callApi('PATCH', API_PATH.POST.PUT.replace(':postId', isUpdate.id), JSON.stringify(data));
+        response = await updateFeed(isUpdate.id, data);
       } else {
-        response = await callApi('POST', API_PATH.POST.POST, JSON.stringify(data));
+        response = await createFeed(data);
       }
       if (response.ok) {
         navigate(CLIENT_PATH.BOARD.replace(':category', currTab));

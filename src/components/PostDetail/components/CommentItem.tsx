@@ -31,6 +31,7 @@ export const Li = styled.li`
   line-height: 20px;
   text-align: center;
   cursor: pointer;
+  width: 98%;
 `;
 
 export const CommentAuthorName = styled.div`

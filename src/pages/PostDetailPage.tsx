@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import { Post } from '../types/post';
-import { Comment } from '../types/comment';
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
-import { useAppSelector, useAppDispatch } from '../Hooks/useSelectorHooks';
-import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
+import { useEffect, useState } from 'react';
 import PostInfo from '../components/PostDetail/components/PostInfo';
 import StoreWrap from '../components/PostDetail/components/StoreWrap';
 import StoreItem from '../components/common/Store/StoreItem';
@@ -14,11 +11,9 @@ import UpdateAndDeleteContainer from '../components/PostDetail/containers/Update
 import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAndReportButtonContainer';
 import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
 import StarIcon from '../components/common/Icons/StarIcon';
-import { getComments } from '../api/CommentApi';
 import MetaTag from '../components/SEO/MetaTag';
 import { API_PATH } from '../constants/path';
 import { Link } from 'react-router-dom';
-
 const Container = styled.div`
   width: 100%;
 `;
@@ -44,14 +39,8 @@ async function fetchData(
   postId = '',
   setPost: React.Dispatch<React.SetStateAction<Post | null>>,
   navigate: NavigateFunction,
-  setLikes: (likes: string[]) => {
-    payload: string[];
-    type: 'PostDetail/setLikes';
-  },
-  setReports: (reports: string[]) => {
-    payload: string[];
-    type: 'PostDetail/setReports';
-  },
+  setLikes: React.Dispatch<React.SetStateAction<string[]>>,
+  setReports: React.Dispatch<React.SetStateAction<string[]>>,
 ) {
   try {
     const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
@@ -70,34 +59,19 @@ async function fetchData(
 
 const PostDetailPage = () => {
   const navigate = useNavigate();
-  const postId = useParams().postId;
+  const { postId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
-  const comments = useAppSelector((state) => state.PostDetailSlice.comment);
-  const dispatch = useAppDispatch();
-  const setComments = useCallback((comments: Comment[]) => {
-    return dispatch(PostDetailActions.setComment(comments));
-  }, []);
-  const setLikes = (likes: string[]) => {
-    return dispatch(PostDetailActions.setLikes(likes));
-  };
-
-  const setReports = useCallback(
-    (reports: string[]) => {
-      return dispatch(PostDetailActions.setReports(reports));
-    },
-    [dispatch],
-  );
+  const [likes, setLikes] = useState<string[]>([]);
+  const [reports, setReports] = useState<string[]>([]);
 
   useEffect(() => {
     fetchData(postId, setPost, navigate, setLikes, setReports);
-    getComments(postId, setComments);
   }, []);
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
-    return <div></div>;
+    return null;
   }
-
   return (
     <Container>
       <MetaTag title={`POPULAR | ${post.title}`} />
@@ -110,7 +84,7 @@ const PostDetailPage = () => {
         authorId={post.author._id}
         createdAt={post.createdAt}
         views={post.views}
-        comments={comments.length}
+        comments={post.comments.length}
       />
       {post.store_id && (
         <StoreWrap>
@@ -131,7 +105,7 @@ const PostDetailPage = () => {
       )}
       <PostContent content={post ? post.content : ''}></PostContent>
       <FlexDiv>
-        <LikesAndReportsContainer />
+        <LikesAndReportsContainer likes={likes} reports={reports} setLikes={setLikes} setReports={setReports} />
         <UpdateAndDeleteContainer post={post} />
       </FlexDiv>
       <CommentListContainer />

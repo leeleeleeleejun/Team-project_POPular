@@ -18,7 +18,6 @@ const ReCommentWrap = styled.ul`
   gap: 10px;
   margin-top: 10px;
   margin-left: 80px;
-
   @media (max-width: 768px) {
     margin-left: 20px;
   }

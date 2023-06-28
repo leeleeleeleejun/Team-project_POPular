@@ -18,8 +18,8 @@ const PageItem = styled.li<{ active: boolean }>`
   margin: 0 3px;
   cursor: pointer;
 
-  ${(props) =>
-    props.active &&
+  ${({ active }) =>
+    active &&
     css`
       color: var(--color-white);
       background-color: var(--color-main);

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const PostRegisterButton = styled.button<{ isUpdate: boolean }>`
-  background-color: ${(props) => (props.isUpdate ? 'var(--color-gray)' : 'var(--color-main)')};
+  background-color: ${({ isUpdate }) => (isUpdate ? 'var(--color-gray)' : 'var(--color-main)')};
   color: var(--color-white);
   height: fit-content;
   border-radius: 8px;

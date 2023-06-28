@@ -17,8 +17,8 @@ const Tab = styled.p<{ active: boolean }>`
     color: var(--color-main);
   }
 
-  ${(props) =>
-    props.active &&
+  ${({ active }) =>
+    active &&
     css`
       color: var(--color-main);
       border-bottom: 3px solid var(--color-main);

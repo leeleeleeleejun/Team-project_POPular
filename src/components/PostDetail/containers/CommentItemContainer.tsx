@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import { Comment } from '../../../types/comment';
 import CommentItem from '../components/CommentItem';
-import { getComments } from '../../../api/CommentApi';
+import { useDeleteComment } from '../../../api/CommentApi';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../Hooks/useSelectorHooks';
-import { PostDetailActions } from '../PostDetailSlice';
-import { API_PATH } from '../../../constants/path';
-import callApi from '../../../utils/callApi';
+import { useAppSelector } from '../../../Hooks/useSelectorHooks';
+import { useQueryClient } from '@tanstack/react-query';
 
 const CommentItemContainer = ({ comment }: { comment: Comment }) => {
   const [reCommentInput, setReCommentInput] = useState(false);
   const UserData = useAppSelector((state) => state.UserSlice.user);
-  const dispatch = useAppDispatch();
-  const setComments = (comments: Comment[]) => {
-    return dispatch(PostDetailActions.setComment(comments));
-  };
-  const postId = useParams().postId;
+
+  const { postId } = useParams();
+  const queryClient = useQueryClient();
+
+  const { mutate } = useDeleteComment({
+    onSuccess: () => {
+      alert('댓글이 삭제되었습니다.');
+      queryClient.refetchQueries(['feedComments', postId]);
+    },
+  });
 
   const commentDeleteApi = async (commentId: string) => {
-    const response = await callApi('DELETE', API_PATH.COMMENT.DELETE, JSON.stringify([commentId]));
-    const result = await response.json();
-    alert(result.message);
-    getComments(postId, setComments);
+    mutate(commentId);
   };
 
   return (

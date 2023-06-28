@@ -2,6 +2,16 @@ import { API_PATH } from '../constants/path';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Post } from '../types/post';
 import { UnPopulatedPost } from '../components/StoreDetail/components/ReviewPost';
+import callApi from '../utils/callApi';
+
+export type writePostBody = {
+  ratings?: number | undefined;
+  store_id?: string | undefined;
+  title: string;
+  author: string | undefined;
+  board: string;
+  content: string;
+};
 
 const fetchData = async (postCategory = '') => {
   try {
@@ -43,13 +53,13 @@ export const getAllReviewFeeds = async () => {
   return response;
 };
 
-export const getStoreReviewFeeds = async (storeId: string) => {
-  const response = await (await fetch(`${API_PATH.POST.GET.REVIEW_BY_STORE.replace(':storeId', storeId)}`)).json();
+export const getAllGatherFeeds = async () => {
+  const response = await (await fetch(API_PATH.POST.GET.ALL_GATHER_FEEDS)).json();
   return response;
 };
 
-export const getAllGatherFeeds = async () => {
-  const response = await (await fetch(API_PATH.POST.GET.ALL_GATHER_FEEDS)).json();
+export const getStoreReviewFeeds = async (storeId: string) => {
+  const response = await (await fetch(`${API_PATH.POST.GET.REVIEW_BY_STORE.replace(':storeId', storeId)}`)).json();
   return response;
 };
 
@@ -58,7 +68,18 @@ export const getUserFeeds = async (userId: string) => {
   return response;
 };
 
-export const deleteFeeds = async (feedIds: string[]): Promise<void> => {
+export const createFeed = async ( data: writePostBody) => {
+  const response = await(await callApi('POST', API_PATH.POST.POST, JSON.stringify(data))).json();
+  return response;
+}
+
+
+export const updateFeed = async ( id: string, data: writePostBody) => {
+  const response = await(await callApi('PATCH', API_PATH.POST.PUT.replace(':postId', id), JSON.stringify(data))).json();
+  return response;
+}
+
+export const deleteFeed = async (feedIds: string[]): Promise<void> => {
   try {
     await fetch(API_PATH.POST.DELETE, {
       headers: { 'Content-Type': 'application/json', authorization: `Bearer ${localStorage.getItem('token')}` },
@@ -90,6 +111,6 @@ export const useGetFeedsByUserId = (userId: string, option?: object) => {
   return useQuery<{ totalDocs: number }>(['feeds', userId], () => getUserFeeds(userId), option);
 };
 
-export const useDeleteFeeds = (feedIds: string[], option?: object) => {
-  return useMutation(() => deleteFeeds(feedIds), option);
+export const useDeleteFeed = (feedIds: string[], option?: object) => {
+  return useMutation(() => deleteFeed(feedIds), option);
 };

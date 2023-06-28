@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import CommentItemContainer from '../containers/CommentItemContainer';
 
-const CommentBox = styled.div`
+const CommentBoxWrap = styled.div`
   margin-top: 30px;
   padding-top: 20px;
 `;
@@ -15,18 +15,35 @@ const Title = styled.h4`
   }
 `;
 
-const CommentsList = ({ comments }: { comments: Comment[] | undefined }) => {
+const CommentBox = styled.ul`
+  height: 250px;
+  overflow-y: auto;
+  -webkit-scrollbar: none;
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+`;
+
+const Loading = styled.div`
+  height: 250px;
+`;
+
+const CommentsList = ({ comments, isFetching }: { comments: Comment[] | undefined; isFetching: boolean }) => {
   return (
-    <CommentBox>
+    <CommentBoxWrap>
       <Title>
         Comment <span>{comments?.length}</span>
       </Title>
-      <ul>
-        {comments?.map((comment, index) => (
-          <CommentItemContainer key={comment._id + index} comment={comment} />
-        ))}
-      </ul>
-    </CommentBox>
+      {isFetching ? (
+        <Loading />
+      ) : (
+        <CommentBox>
+          {comments?.map((comment, index) => (
+            <CommentItemContainer key={comment._id + index} comment={comment} />
+          ))}
+        </CommentBox>
+      )}
+    </CommentBoxWrap>
   );
 };
 

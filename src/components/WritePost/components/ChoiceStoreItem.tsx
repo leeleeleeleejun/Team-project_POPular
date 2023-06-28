@@ -11,7 +11,7 @@ const Li = styled.li`
 const ChoiceButton = styled.button<{ choice: boolean }>`
   padding: 0 5px;
   color: var(--color-white);
-  background-color: ${(props) => (props.choice ? 'var(--color-gray)' : 'var(--color-sub)')};
+  background-color: ${({ choice }) => (choice ? 'var(--color-gray)' : 'var(--color-sub)')};
   height: 30px;
   font-size: 12px;
   width: 40px;

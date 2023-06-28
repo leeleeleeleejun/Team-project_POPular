@@ -25,7 +25,7 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
     return dispatch(WritePostSliceActions.setIsUpdate(isUpdate));
   };
 
-  const postId = useParams().postId;
+  const { postId } = useParams();
 
   const isAuthor = post && UserData?._id === post.author._id;
 

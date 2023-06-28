@@ -32,7 +32,7 @@ const Container = styled.div<{ isDetail: boolean }>`
 
     transition: all 0.3s;
 
-    transform: ${(props) => (props.isDetail ? 'translateX(0)' : 'translateX(100%)')};
+    transform: ${({ isDetail }) => (isDetail ? 'translateX(0)' : 'translateX(100%)')};
   }
 
   .detail-info-btn,

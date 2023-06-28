@@ -41,7 +41,7 @@ const PostListItemContainer = () => {
       setFilterAddressValue('지역');
     }
   }, [searchValue]);
-  const { data, isFetching, isError } = useGetFeeds(postCategory, { cacheTime: 0 });
+  const { data, isFetching, isError } = useGetFeeds(postCategory);
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
   const originalPost: Post[] | undefined = useMemo(() => {

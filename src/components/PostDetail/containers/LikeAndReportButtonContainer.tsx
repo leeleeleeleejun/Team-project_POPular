@@ -1,27 +1,25 @@
 import LikesAndReports from '../components/LikeAndReportButton';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
-import { PostDetailActions } from '../PostDetailSlice';
+import { useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
 import LoginModal from '../../common/Modals/LoginModal';
 
-const LikesAndReportsContainer = () => {
-  const postId = useParams().postId;
+const LikesAndReportsContainer = ({
+  likes,
+  reports,
+  setLikes,
+  setReports,
+}: {
+  likes: string[];
+  reports: string[];
+  setLikes: React.Dispatch<React.SetStateAction<string[]>>;
+  setReports: React.Dispatch<React.SetStateAction<string[]>>;
+}) => {
+  const { postId } = useParams();
   const UserData = useAppSelector((state) => state.UserSlice.user);
-  const likes = useAppSelector((state) => state.PostDetailSlice.likes);
-  const reports = useAppSelector((state) => state.PostDetailSlice.reports);
-  const dispatch = useAppDispatch();
-  const setLikes = (likes: string[]) => {
-    return dispatch(PostDetailActions.setLikes(likes));
-  };
-  const setReports = (reports: string[]) => {
-    return dispatch(PostDetailActions.setReports(reports));
-  };
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
   const [checkLike, setCheckLike] = useState<boolean>();
   const [checkReport, setCheckReport] = useState<boolean>();
 
@@ -30,19 +28,19 @@ const LikesAndReportsContainer = () => {
     UserData && setCheckReport(reports.includes(UserData._id));
   }, [UserData, likes, reports]);
 
-  async function FetchData(isLike: string) {
+  async function FetchData(LikeOrReport: string) {
     if (!UserData) {
       setIsModalOpen(true);
       return;
     }
-    const data = { [isLike]: UserData._id };
+    const data = { [LikeOrReport]: UserData._id };
     const response = await callApi(
       'PATCH',
-      `${API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : '')}/${isLike}`,
+      `${API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : '')}/${LikeOrReport}`,
       JSON.stringify(data),
     );
     const result = await response.json();
-    isLike === 'like' ? setLikes(result.likes) : setReports(result.reports);
+    LikeOrReport === 'like' ? setLikes(result.likes) : setReports(result.reports);
   }
 
   return (

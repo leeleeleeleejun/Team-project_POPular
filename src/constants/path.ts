@@ -75,7 +75,7 @@ export const API_PATH = {
       // 특정 유저의 전체 코멘트
       BY_USER: '/comment/user/:userId',
       // 특정 포스트의 전체 코멘트
-      BY_POST: '/comment/post/:postId',
+      BY_POST: `${API_BASE_URL}/feeds/:postId/comments`,
     },
     POST: `${API_BASE_URL}/comments`,
     PUT: {},

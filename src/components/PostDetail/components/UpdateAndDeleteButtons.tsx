@@ -8,7 +8,7 @@ const Button = styled.button<{ update: boolean }>`
   width: 55px;
   height: 35px;
   font-size: var(--font-regular);
-  background-color: ${(props) => (props.update ? 'var(--color-main)' : 'var(--color-gray)')};
+  background-color: ${({ update }) => (update ? 'var(--color-main)' : 'var(--color-gray)')};
   margin: 5px;
   cursor: pointer;
 `;

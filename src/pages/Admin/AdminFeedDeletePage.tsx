@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
 import AlertModal from '../../components/common/Modals/AlertModal';
-import { useDeleteFeeds, useGetAllFeeds } from '../../api/feedApi';
+import { useDeleteFeed, useGetAllFeeds } from '../../api/feedApi';
 import AdminFeedList from '../../components/Admin/components/Feeds/AdminFeedList';
 import AdminFeedItem from '../../components/Admin/components/Feeds/AdminFeedItem';
 
@@ -74,7 +74,7 @@ const AdminFeedDeletePage = () => {
   const { data: allFeeds } = useGetAllFeeds();
   const [selectedId, setSelectedId] = useState<string[]>([]);
 
-  const { mutate, isSuccess } = useDeleteFeeds(selectedId, {
+  const { mutate, isSuccess } = useDeleteFeed(selectedId, {
     onSuccess: () => {
       setSelectedId([]);
       setIsModalOpen(true);
