@@ -1,5 +1,5 @@
 import CommentInput from '../components/CommentInput';
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { useCreateComment } from '../../../api/CommentApi';
@@ -24,7 +24,6 @@ const CommentInputContainer = ({
 }) => {
   const { postId } = useParams();
   const [input, setInput] = useState('');
-  const [isComposing, setIsComposing] = useState(false);
   const UserData = useAppSelector((state) => state.UserSlice.user);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,13 +60,7 @@ const CommentInputContainer = ({
 
   return (
     <>
-      <CommentInput
-        isComposing={isComposing}
-        setIsComposing={setIsComposing}
-        onChange={onChange}
-        value={input}
-        RegisterComment={RegisterComment}
-      />
+      <CommentInput onChange={onChange} value={input} RegisterComment={RegisterComment} />
       {isModalOpen && <LoginModal onClose={setIsModalOpen} />}
     </>
   );

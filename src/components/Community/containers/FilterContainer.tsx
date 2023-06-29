@@ -3,9 +3,8 @@ import { communityActions } from '../CommunitySlice';
 import Filter from '../../common/Filter/Filter';
 import FilterDuration from '../../common/Filter/FilterDuration';
 import FilterBox from '../../common/Filter/FilterBox';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { address, category } from '../../../constants/filterOptions';
-import { useEffect } from 'react';
 
 const FilterContainer = () => {
   const durationFilterValue = useAppSelector((state) => state.CommunitySlice.durationFilter);

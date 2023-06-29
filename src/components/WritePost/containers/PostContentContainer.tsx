@@ -4,9 +4,11 @@ import { WritePostSliceActions } from '../WritePostSlice';
 const PostContentContainer = () => {
   const postContent = useAppSelector((state) => state.WritePostSlice.postContent);
   const dispatch = useAppDispatch();
+
   const setPostContent = (content: string) => {
     return dispatch(WritePostSliceActions.setPostContent(content));
   };
+
   return <PostContent postContent={postContent} setPostContent={setPostContent} />;
 };
 

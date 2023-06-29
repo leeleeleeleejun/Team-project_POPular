@@ -1,18 +1,17 @@
-import FilterContainer from './FilterContainer';
-import FilterInfoContainer from './FilterInfoContainer';
-import ChoiceStoreItemContainer from './ChoiceStoreItemContainer';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
 import { useState, useEffect } from 'react';
-import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
-import filterFunc from '../../../utils/filterFunc';
-import ChoiceStoreList from '../components/ChoiceStoreList';
-import ChoiceStoreBox from '../components/ChoiceStoreBox';
 import { API_PATH } from '../../../constants/path';
+import filterFunc from '../../../utils/filterFunc';
+import FilterContainer from './FilterContainer';
+import FilterInfoContainer from './FilterInfoContainer';
+import ChoiceStoreItemContainer from './ChoiceStoreItemContainer';
 import SearchInputContainer from './SearchInputContainer';
 import searchFilter from '../../../utils/SearchFilter';
-
+import StoreItem from '../../common/Store/StoreItem';
+import ChoiceStoreList from '../components/ChoiceStoreList';
+import ChoiceStoreBox from '../components/ChoiceStoreBox';
 const ChoiceStoreBoxContainer = () => {
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
   const dispatch = useAppDispatch();

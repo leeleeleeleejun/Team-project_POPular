@@ -1,11 +1,13 @@
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import FilterInfo from '../../common/Filter/FilterInfo';
 import { WritePostSliceActions } from '../WritePostSlice';
+
 const FilterInfoContainer = () => {
-  const dispatch = useAppDispatch();
   const addressFilter = useAppSelector((state) => state.WritePostSlice.addressFilter);
   const categoryFilter = useAppSelector((state) => state.WritePostSlice.categoryFilter);
   const durationFilter = useAppSelector((state) => state.WritePostSlice.durationFilter);
+
+  const dispatch = useAppDispatch();
   const setFilterAddressValue = (address: string) => dispatch(WritePostSliceActions.setFilterAddressValue(address));
   const setFilterCategoryValue = (category: string) => dispatch(WritePostSliceActions.setFilterCategoryValue(category));
   const setFilterAddressUse = (use: boolean) => dispatch(WritePostSliceActions.setFilterAddressUse(use));

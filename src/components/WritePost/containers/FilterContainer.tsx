@@ -1,10 +1,10 @@
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
+import { useState } from 'react';
+import { address, category } from '../../../constants/filterOptions';
 import Filter from '../../common/Filter/Filter';
 import FilterDuration from '../../common/Filter/FilterDuration';
 import FilterBox from '../../common/Filter/FilterBox';
-import { useState } from 'react';
-import { address, category } from '../../../constants/filterOptions';
 
 const FilterContainer = () => {
   const durationFilterValue = useAppSelector((state) => state.WritePostSlice.durationFilter);

@@ -1,11 +1,11 @@
 import UpdateAndDelete from '../components/UpdateAndDeleteButtons';
+import callApi from '../../../utils/callApi';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions, isUpdate } from '../../WritePost/WritePostSlice';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Post } from '../../../types/post';
 import { API_PATH } from '../../../constants/path';
-import callApi from '../../../utils/callApi';
 
 const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   const navigate: NavigateFunction = useNavigate();

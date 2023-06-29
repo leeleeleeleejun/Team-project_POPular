@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 const CommentInputWrap = styled.div`
@@ -26,14 +25,10 @@ const RegisterButton = styled.button`
 `;
 
 const CommentInput = ({
-  isComposing,
-  setIsComposing,
   value,
   onChange,
   RegisterComment,
 }: {
-  isComposing: boolean;
-  setIsComposing: Dispatch<SetStateAction<boolean>>;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   RegisterComment: () => void;
@@ -44,10 +39,8 @@ const CommentInput = ({
         placeholder="댓글을 입력해주세요"
         onChange={onChange}
         value={value}
-        onCompositionStart={() => setIsComposing(true)}
-        onCompositionEnd={() => setIsComposing(false)}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
             RegisterComment();
           }
         }}
