@@ -7,10 +7,11 @@ import FilterDuration from '../../common/Filter/FilterDuration';
 import FilterBox from '../../common/Filter/FilterBox';
 
 const FilterContainer = () => {
+  const Tab = useAppSelector((state) => state.WritePostSlice.tab);
   const durationFilterValue = useAppSelector((state) => state.WritePostSlice.durationFilter);
   const addressFilterValue = useAppSelector((state) => state.WritePostSlice.addressFilter);
   const categoryFilterValue = useAppSelector((state) => state.WritePostSlice.categoryFilter);
-  const Tab = useAppSelector((state) => state.WritePostSlice.tab);
+
   const dispatch = useAppDispatch();
   //지역 필터
   const setFilterAddressValue = (address: string) => dispatch(WritePostSliceActions.setFilterAddressValue(address));
@@ -26,7 +27,6 @@ const FilterContainer = () => {
 
   // redux 기간 설정 전 validation을 위한 상태
   const [startDateTarget, setStartDateTarget] = useState(durationFilterValue.startDate);
-  // redux 기간 설정 전 validation을 위한 상태
   const [endDateTarget, setEndDateTarget] = useState(durationFilterValue.endDate);
 
   // 자유게시판으로 이동 시 필터 초기화

@@ -69,13 +69,13 @@ export const getUserFeeds = async (userId: string) => {
 };
 
 export const createFeed = async ( data: writePostBody) => {
-  const response = await(await callApi('POST', API_PATH.POST.POST, JSON.stringify(data))).json();
+  const response = await callApi('POST', API_PATH.POST.POST, JSON.stringify(data));
   return response;
 }
 
 
 export const updateFeed = async ( id: string, data: writePostBody) => {
-  const response = await(await callApi('PATCH', API_PATH.POST.PUT.replace(':postId', id), JSON.stringify(data))).json();
+  const response = await callApi('PATCH', API_PATH.POST.PUT.replace(':postId', id), JSON.stringify(data));
   return response;
 }
 

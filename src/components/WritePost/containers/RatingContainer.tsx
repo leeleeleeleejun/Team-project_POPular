@@ -6,6 +6,7 @@ import StarIcon from '../../common/Icons/StarIcon';
 
 const RatingContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
+
   const dispatch = useAppDispatch();
   const setRating = (rating: number) => dispatch(WritePostSliceActions.setRating(rating));
 
@@ -32,7 +33,7 @@ const RatingContainer = () => {
                 setRating(item + 1);
               }}
             >
-              <StarIcon fill={clicked[item] ? 'var(--color-sub)' : 'var(--color-gray)'} width={25} />
+              <StarIcon fill={clicked[item]} width={25} />
             </span>
           ))}
         </>

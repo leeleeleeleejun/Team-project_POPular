@@ -39,7 +39,7 @@ const FilterContainer = () => {
     }
   }, [tab]);
   if (tab === '자유게시판') {
-    return <div></div>;
+    return null;
   } else {
     return (
       <FilterBox>

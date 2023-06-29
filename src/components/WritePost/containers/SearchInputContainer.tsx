@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from '../../../Hooks/useSelectorHooks'
 import { WritePostSliceActions } from '../WritePostSlice';
 
 const SearchInputContainer = () => {
-  const dispatch = useAppDispatch();
-
   const searchValue = useAppSelector((state) => state.WritePostSlice.searchValue);
+
+  const dispatch = useAppDispatch();
   const setSearchValue = (value: string) => dispatch(WritePostSliceActions.setSearchValue(value));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { useCreateComment } from '../../../api/CommentApi';
 import LoginModal from '../../common/Modals/LoginModal';
 import { useQueryClient } from '@tanstack/react-query';
+
 type postCommentBody = {
   author: string;
   content: string;
@@ -22,16 +23,15 @@ const CommentInputContainer = ({
   commentId?: string;
   setReCommentInput?: () => void;
 }) => {
-  const { postId } = useParams();
   const [input, setInput] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { postId } = useParams();
   const UserData = useAppSelector((state) => state.UserSlice.user);
+  const queryClient = useQueryClient();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value.normalize());
+    setInput(e.target.value);
   };
-
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const queryClient = useQueryClient();
 
   const { mutate } = useCreateComment({
     onSuccess: () => {

@@ -26,11 +26,6 @@ export interface CommunityInitialState {
   };
 }
 
-export interface SetFilter {
-  filter: string;
-  use: boolean;
-}
-
 const initialState: CommunityInitialState = {
   tab: '전체게시판',
   searchValue: '',

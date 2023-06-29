@@ -12,21 +12,22 @@ import searchFilter from '../../../utils/SearchFilter';
 import StoreItem from '../../common/Store/StoreItem';
 import ChoiceStoreList from '../components/ChoiceStoreList';
 import ChoiceStoreBox from '../components/ChoiceStoreBox';
+
 const ChoiceStoreBoxContainer = () => {
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
-  const dispatch = useAppDispatch();
-  const setChoiceStoreId = (id: string) => {
-    return dispatch(WritePostSliceActions.setChoiceStoreId(id));
-  };
   const searchValue = useAppSelector((state) => state.WritePostSlice.searchValue);
   const filterCategory = useAppSelector((state) => state.WritePostSlice.categoryFilter);
   const filterAddress = useAppSelector((state) => state.WritePostSlice.addressFilter);
   const filterDate = useAppSelector((state) => state.WritePostSlice.durationFilter);
+
+  const dispatch = useAppDispatch();
+  const setChoiceStoreId = (id: string) => dispatch(WritePostSliceActions.setChoiceStoreId(id));
   const setFilterCategoryUse = (use: boolean) => dispatch(WritePostSliceActions.setFilterCategoryUse(use));
   const setFilterAddressUse = (use: boolean) => dispatch(WritePostSliceActions.setFilterAddressUse(use));
   const setFilterDurationUse = (use: boolean) => dispatch(WritePostSliceActions.setFilterDurationUse(use));
   const setFilterCategoryValue = (category: string) => dispatch(WritePostSliceActions.setFilterCategoryValue(category));
   const setFilterAddressValue = (address: string) => dispatch(WritePostSliceActions.setFilterAddressValue(address));
+
   let storeList: Store[] = [];
   const [stores, setStores] = useState<Store[]>();
   async function fetchData() {
@@ -64,15 +65,13 @@ const ChoiceStoreBoxContainer = () => {
       <FilterContainer />
       <FilterInfoContainer />
       <ChoiceStoreList choice={choiceStoreId.length > 0}>
-        {storeList ? (
-          storeList.map((store: Store) => (
-            <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
-              <StoreItem store={store} />
-            </ChoiceStoreItemContainer>
-          ))
-        ) : (
-          <li></li>
-        )}
+        {storeList
+          ? storeList.map((store: Store) => (
+              <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
+                <StoreItem store={store} />
+              </ChoiceStoreItemContainer>
+            ))
+          : null}
       </ChoiceStoreList>
     </ChoiceStoreBox>
   );

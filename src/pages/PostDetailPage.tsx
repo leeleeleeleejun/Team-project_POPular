@@ -96,7 +96,7 @@ const PostDetailPage = () => {
                 {Array(post.ratings)
                   .fill(0)
                   .map((i, index) => (
-                    <StarIcon key={index} fill="var(--color-sub)" width={20} />
+                    <StarIcon key={index} fill={true} width={20} />
                   ))}
               </RatingsWrap>
             )}

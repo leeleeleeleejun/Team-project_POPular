@@ -25,12 +25,12 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
     return dispatch(WritePostSliceActions.setIsUpdate(isUpdate));
   };
 
-  const { postId } = useParams();
+  const postId = useParams().postId || '';
 
-  const isAuthor = post && UserData?._id === post.author._id;
+  const isAuthor = UserData?._id === post.author._id;
 
   const deletePost = async () => {
-    await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
+    await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId]));
     navigate(-1);
   };
 
@@ -43,7 +43,7 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
     setIsUpdate({ use: true, id: post._id });
     navigate('/community/write');
   };
-  return isAuthor ? <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete> : <div></div>;
+  return isAuthor ? <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete> : null;
 };
 
 export default UpdateAndDeleteContainer;

@@ -107,7 +107,7 @@ export const CommentDeleteButton = styled.button`
   color: var(--color-gray);
   cursor: pointer;
 
-  :hover {
+  &:hover {
     opacity: 1;
     color: var(--color-red);
     transform: scale(1.5);

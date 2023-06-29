@@ -17,15 +17,17 @@ const LikesAndReportsContainer = ({
   setLikes: React.Dispatch<React.SetStateAction<string[]>>;
   setReports: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
-  const { postId } = useParams();
+  const postId = useParams().postId || '';
   const UserData = useAppSelector((state) => state.UserSlice.user);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [checkLike, setCheckLike] = useState<boolean>();
   const [checkReport, setCheckReport] = useState<boolean>();
 
   useEffect(() => {
-    UserData && setCheckLike(likes.includes(UserData._id));
-    UserData && setCheckReport(reports.includes(UserData._id));
+    if (UserData) {
+      setCheckLike(likes.includes(UserData._id));
+      setCheckReport(reports.includes(UserData._id));
+    }
   }, [UserData, likes, reports]);
 
   async function FetchData(LikeOrReport: string) {
@@ -36,7 +38,7 @@ const LikesAndReportsContainer = ({
     const data = { [LikeOrReport]: UserData._id };
     const response = await callApi(
       'PATCH',
-      `${API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : '')}/${LikeOrReport}`,
+      `${API_PATH.POST.GET.BY_ID.replace(':postId', postId)}/${LikeOrReport}`,
       JSON.stringify(data),
     );
     const result = await response.json();

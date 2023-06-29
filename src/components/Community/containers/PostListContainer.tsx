@@ -44,18 +44,20 @@ const PostListItemContainer = () => {
   const { data, isFetching, isError } = useGetFeeds(postCategory);
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
-  const originalPost: Post[] | undefined = useMemo(() => {
+  const originalPost: Post[] = useMemo(() => {
+    if (!data) {
+      return [];
+    }
     if (searchValue.length > 0) {
-      return data && searchFilter(data, searchValue);
+      return searchFilter(data, searchValue);
     }
     if (useFilter) {
       //스토어만 따로 맵핑
-      const stores: Store[] | undefined =
-        data && data.map((post: Post) => post.store_id).filter((value): value is Store => Boolean(value));
+      const stores = data.map((post: Post) => post.store_id).filter((value): value is Store => Boolean(value));
       // 필터링된 스토어리스트
-      const useFilterStoreList = stores && filterFunc(stores, filterAddress, filterCategory, filterDate);
+      const useFilterStoreList = filterFunc(stores, filterAddress, filterCategory, filterDate);
       // 필터링된 게시글들
-      const useFilterPosts = data?.filter((post) =>
+      const useFilterPosts = data.filter((post) =>
         useFilterStoreList?.some((store) => store._id === post.store_id?._id),
       );
       return useFilterPosts;
@@ -66,7 +68,7 @@ const PostListItemContainer = () => {
 
   const dividedPost: Post[][] = useMemo(() => {
     const post: Post[][] = [];
-    if (originalPost !== undefined && originalPost.length > 0) {
+    if (originalPost.length > 0) {
       for (let i = 0; i < originalPost.length; i += 7) {
         post.push(originalPost.slice(i, i + 7));
       }
@@ -95,21 +97,19 @@ const PostListItemContainer = () => {
   }, [page, dividedPost, setPageGroup]);
 
   if (isError) {
-    return <></>;
+    return null;
   }
   return (
     <PostList>
-      {isFetching ? (
-        <></>
-      ) : (
-        dividedPost[page - 1]?.map((post) => (
-          <li key={post._id}>
-            <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
-              <PostItem post={post} />
-            </Link>
-          </li>
-        ))
-      )}
+      {isFetching
+        ? null
+        : dividedPost[page - 1]?.map((post) => (
+            <li key={post._id}>
+              <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
+                <PostItem post={post} />
+              </Link>
+            </li>
+          ))}
     </PostList>
   );
 };
